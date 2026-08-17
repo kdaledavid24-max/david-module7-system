@@ -19,6 +19,16 @@ const form = ref({
 
 const errors = ref({})
 
+const resetForm = () => {
+  form.value = {
+    customerName: '',
+    foodItems: '',
+    totalAmount: '',
+    status: 'Pending'
+  }
+  errors.value = {}
+}
+
 watch(() => props.editingRecord, (newVal) => {
   if (newVal) {
     form.value = { ...newVal }
@@ -44,16 +54,6 @@ const submitForm = () => {
       resetForm()
     }
   }
-}
-
-const resetForm = () => {
-  form.value = {
-    customerName: '',
-    foodItems: '',
-    totalAmount: '',
-    status: 'Pending'
-  }
-  errors.value = {}
 }
 
 const cancel = () => {
