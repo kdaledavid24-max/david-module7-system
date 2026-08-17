@@ -16,13 +16,6 @@
           <p class="text-xs text-gray-400 mt-0.5">Food Ordering System - Menu Management</p>
         </div>
       </div>
-
-      <!-- Right side: Badge -->
-      <div>
-        <span class="border border-[#ffcc00] text-[#ffcc00] text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
-          Module 7 Prototype
-        </span>
-      </div>
       
     </div>
   </header>

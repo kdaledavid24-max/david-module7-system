@@ -16,10 +16,13 @@ onMounted(() => {
   if (saved) {
     records.value = JSON.parse(saved)
   } else {
-    // Seed initial data if empty
+    // Seed initial sample data
     records.value = [
-      { id: '1786605903038', foodName: 'Classic Burger', category: 'Main Course', price: 150.00, status: 'Available', image: '/images/burger.jpg' },
-      { id: '1786605903039', foodName: 'Iced Matcha Latte', category: 'Drinks', price: 120.00, status: 'Available', image: '/images/matcha.jpg' }
+      { id: '1786605903038', customerName: 'Juan Dela Cruz', foodName: 'Classic Burger', category: 'Main Course', price: 150.00, status: 'Delivered', image: '/images/burger.jpg' },
+      { id: '1786605903039', customerName: 'Maria Santos', foodName: 'Iced Matcha Latte', category: 'Drinks', price: 120.00, status: 'Available', image: '/images/matcha.jpg' },
+      { id: '1786605903040', customerName: 'Carlos Reyes', foodName: 'Pepperoni Pizza', category: 'Main Course', price: 250.00, status: 'Preparing', image: '/images/pizza.jpg' },
+      { id: '1786605903041', customerName: 'Ana Garcia', foodName: 'Crispy Fries', category: 'Sides', price: 80.00, status: 'Pending', image: '/images/fries.jpg' },
+      { id: '1786605903042', customerName: 'Rico Mendoza', foodName: 'Classic Burger', category: 'Main Course', price: 150.00, status: 'Cancelled', image: '/images/burger.jpg' }
     ]
     saveRecords()
   }
@@ -84,9 +87,18 @@ const filteredRecords = computed(() => {
   
   return records.value.filter(record => 
     record.foodName.toLowerCase().includes(keyword) ||
-    record.category.toLowerCase().includes(keyword)
+    record.category.toLowerCase().includes(keyword) ||
+    (record.customerName && record.customerName.toLowerCase().includes(keyword))
   )
 })
+
+// Summary stats
+const totalOrders = computed(() => records.value.length)
+const availableCount = computed(() => records.value.filter(r => r.status === 'Available').length)
+const pendingCount = computed(() => records.value.filter(r => r.status === 'Pending').length)
+const preparingCount = computed(() => records.value.filter(r => r.status === 'Preparing').length)
+const deliveredCount = computed(() => records.value.filter(r => r.status === 'Delivered').length)
+const cancelledCount = computed(() => records.value.filter(r => r.status === 'Cancelled' || r.status === 'Unavailable').length)
 </script>
 
 <template>
@@ -98,7 +110,7 @@ const filteredRecords = computed(() => {
       <!-- Feedback Toast -->
       <div 
         v-if="feedbackMessage" 
-        class="fixed top-20 right-6 bg-[#ffcc00] text-black px-6 py-3 rounded shadow-lg font-bold z-50 transition-opacity"
+        class="fixed top-20 right-6 bg-[#ffcc00] text-black px-6 py-3 rounded shadow-lg font-bold z-50 animate-pulse"
       >
         {{ feedbackMessage }}
       </div>
@@ -119,9 +131,42 @@ const filteredRecords = computed(() => {
         <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-[#ffcc00] opacity-5 rounded-full blur-3xl pointer-events-none"></div>
       </div>
 
+      <!-- Summary Dashboard -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
+        <!-- Total Orders -->
+        <div class="border border-[#222] rounded-xl bg-[#111] p-5 text-center hover:border-[#ffcc00]/30 transition">
+          <p class="text-3xl font-black text-[#ffcc00]">{{ totalOrders }}</p>
+          <p class="text-[10px] uppercase tracking-widest text-gray-400 mt-2 font-bold">Total Orders</p>
+        </div>
+        <!-- Available -->
+        <div class="border border-[#222] rounded-xl bg-[#111] p-5 text-center hover:border-green-800/50 transition">
+          <p class="text-3xl font-black text-green-400">{{ availableCount }}</p>
+          <p class="text-[10px] uppercase tracking-widest text-gray-400 mt-2 font-bold">Available</p>
+        </div>
+        <!-- Pending -->
+        <div class="border border-[#222] rounded-xl bg-[#111] p-5 text-center hover:border-yellow-800/50 transition">
+          <p class="text-3xl font-black text-yellow-400">{{ pendingCount }}</p>
+          <p class="text-[10px] uppercase tracking-widest text-gray-400 mt-2 font-bold">Pending</p>
+        </div>
+        <!-- Preparing -->
+        <div class="border border-[#222] rounded-xl bg-[#111] p-5 text-center hover:border-blue-800/50 transition">
+          <p class="text-3xl font-black text-blue-400">{{ preparingCount }}</p>
+          <p class="text-[10px] uppercase tracking-widest text-gray-400 mt-2 font-bold">Preparing</p>
+        </div>
+        <!-- Delivered -->
+        <div class="border border-[#222] rounded-xl bg-[#111] p-5 text-center hover:border-green-800/50 transition">
+          <p class="text-3xl font-black text-emerald-400">{{ deliveredCount }}</p>
+          <p class="text-[10px] uppercase tracking-widest text-gray-400 mt-2 font-bold">Delivered</p>
+        </div>
+        <!-- Cancelled -->
+        <div class="border border-[#222] rounded-xl bg-[#111] p-5 text-center hover:border-red-800/50 transition">
+          <p class="text-3xl font-black text-red-400">{{ cancelledCount }}</p>
+          <p class="text-[10px] uppercase tracking-widest text-gray-400 mt-2 font-bold">Cancelled</p>
+        </div>
+      </div>
+
       <!-- Main Content Area -->
       <div class="w-full">
-        <!-- The RecordList now takes full width as per the new layout since Add form is a modal -->
         <RecordList 
           :records="filteredRecords"
           :searchTerm="searchTerm"

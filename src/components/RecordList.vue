@@ -43,7 +43,7 @@ defineEmits(['edit', 'delete', 'update:searchTerm', 'add'])
           :value="searchTerm"
           @input="$emit('update:searchTerm', $event.target.value)"
           type="text" 
-          placeholder="Search by food name..." 
+          placeholder="Search by food name or customer..." 
           class="w-full pl-10 pr-4 py-3 bg-black border border-[#333] rounded-lg text-white focus:outline-none focus:border-[#ffcc00] text-sm placeholder-gray-600 transition"
         />
       </div>
@@ -60,6 +60,7 @@ defineEmits(['edit', 'delete', 'update:searchTerm', 'add'])
         <thead>
           <tr class="text-[#ffcc00] text-[10px] uppercase font-black tracking-widest border-b border-[#222]">
             <th class="px-6 py-4">ID</th>
+            <th class="px-6 py-4">Customer</th>
             <th class="px-6 py-4">Food Name</th>
             <th class="px-6 py-4">Category</th>
             <th class="px-6 py-4">Price</th>
@@ -70,7 +71,10 @@ defineEmits(['edit', 'delete', 'update:searchTerm', 'add'])
         <tbody class="divide-y divide-[#222]">
           <tr v-for="record in records" :key="record.id" class="hover:bg-[#1a1a1a] transition group">
             <td class="px-6 py-4 text-xs text-gray-500 font-mono">
-              #{{ record.id }}
+              #{{ record.id.slice(-6) }}
+            </td>
+            <td class="px-6 py-4">
+              <div class="font-semibold text-white text-sm">{{ record.customerName || '—' }}</div>
             </td>
             <td class="px-6 py-4">
               <div class="flex items-center">
@@ -91,8 +95,10 @@ defineEmits(['edit', 'delete', 'update:searchTerm', 'add'])
               <span 
                 class="px-3 py-1 inline-flex text-[10px] leading-5 font-bold rounded-full uppercase tracking-wider border"
                 :class="{
-                  'bg-green-900/30 text-green-400 border-green-800': record.status === 'Available',
-                  'bg-red-900/30 text-red-400 border-red-800': record.status === 'Unavailable'
+                  'bg-yellow-900/30 text-yellow-400 border-yellow-800': record.status === 'Pending',
+                  'bg-blue-900/30 text-blue-400 border-blue-800': record.status === 'Preparing',
+                  'bg-green-900/30 text-green-400 border-green-800': record.status === 'Ready' || record.status === 'Available' || record.status === 'Delivered',
+                  'bg-red-900/30 text-red-400 border-red-800': record.status === 'Unavailable' || record.status === 'Cancelled'
                 }"
               >
                 {{ record.status }}
