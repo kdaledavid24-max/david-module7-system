@@ -1,8 +1,8 @@
 <template>
-  <footer class="bg-gray-800 text-white text-center py-4 mt-auto">
-    <div class="container mx-auto px-4">
-      <p>&copy; {{ new Date().getFullYear() }} Food Ordering System</p>
-      <p class="text-sm text-gray-400 mt-1">Student: Your Name | Section: Your Section</p>
+  <footer class="border-t border-[#222] text-[#888] text-center py-6 mt-auto">
+    <div class="container mx-auto px-6">
+      <p class="text-sm tracking-wide">&copy; {{ new Date().getFullYear() }} FoodFlow Menu Management</p>
+      <p class="text-xs mt-2 opacity-75">Student: Your Name | Section: Your Section</p>
     </div>
   </footer>
 </template>

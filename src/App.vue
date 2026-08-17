@@ -8,62 +8,74 @@ import AppFooter from './components/AppFooter.vue'
 const records = ref([])
 const searchTerm = ref('')
 const editingRecord = ref(null)
+const isModalOpen = ref(false)
 const feedbackMessage = ref('')
-const feedbackType = ref('success')
 
 onMounted(() => {
   const saved = localStorage.getItem('module7-records')
-  records.value = saved ? JSON.parse(saved) : []
+  if (saved) {
+    records.value = JSON.parse(saved)
+  } else {
+    // Seed initial data if empty
+    records.value = [
+      { id: '1786605903038', foodName: 'Classic Burger', category: 'Main Course', price: 150.00, status: 'Available', image: '/images/burger.jpg' },
+      { id: '1786605903039', foodName: 'Iced Matcha Latte', category: 'Drinks', price: 120.00, status: 'Available', image: '/images/matcha.jpg' }
+    ]
+    saveRecords()
+  }
 })
 
 const saveRecords = () => {
   localStorage.setItem('module7-records', JSON.stringify(records.value))
 }
 
-const showFeedback = (message, type = 'success') => {
+const showFeedback = (message) => {
   feedbackMessage.value = message
-  feedbackType.value = type
   setTimeout(() => {
     feedbackMessage.value = ''
   }, 3000)
+}
+
+const openAddModal = () => {
+  editingRecord.value = null
+  isModalOpen.value = true
+}
+
+const handleEditRecord = (record) => {
+  editingRecord.value = { ...record }
+  isModalOpen.value = true
+}
+
+const handleCloseModal = () => {
+  isModalOpen.value = false
+  editingRecord.value = null
 }
 
 const handleSaveRecord = (recordData) => {
   if (editingRecord.value) {
     const index = records.value.findIndex(r => r.id === editingRecord.value.id)
     if (index !== -1) {
-      records.value[index] = { ...recordData, id: editingRecord.value.id, updatedAt: new Date().toISOString(), createdAt: editingRecord.value.createdAt }
-      showFeedback('Order updated successfully')
+      records.value[index] = { ...recordData, id: editingRecord.value.id }
+      showFeedback('Item updated successfully.')
     }
-    editingRecord.value = null
   } else {
     records.value.push({
       id: Date.now().toString(),
-      ...recordData,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      ...recordData
     })
-    showFeedback('Order added successfully')
+    showFeedback('Item added successfully.')
   }
   saveRecords()
-}
-
-const handleEditRecord = (record) => {
-  editingRecord.value = { ...record }
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  handleCloseModal()
 }
 
 const handleDeleteRecord = (id) => {
-  const confirmed = window.confirm('Are you sure you want to delete this order?')
+  const confirmed = window.confirm('Are you sure you want to delete this item?')
   if (!confirmed) return
   
   records.value = records.value.filter(record => record.id !== id)
   saveRecords()
-  showFeedback('Order deleted successfully', 'error')
-}
-
-const handleCancelEdit = () => {
-  editingRecord.value = null
+  showFeedback('Item deleted.')
 }
 
 const filteredRecords = computed(() => {
@@ -71,62 +83,63 @@ const filteredRecords = computed(() => {
   if (!keyword) return records.value
   
   return records.value.filter(record => 
-    record.customerName.toLowerCase().includes(keyword) ||
-    record.foodItems.toLowerCase().includes(keyword) ||
-    record.status.toLowerCase().includes(keyword)
+    record.foodName.toLowerCase().includes(keyword) ||
+    record.category.toLowerCase().includes(keyword)
   )
 })
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col bg-gray-100 font-sans">
+  <div class="min-h-screen flex flex-col bg-[#0a0a0a] text-white font-sans antialiased">
     <AppHeader />
     
-    <main class="flex-grow container mx-auto px-4 py-8">
-      <!-- Feedback Message -->
+    <main class="flex-grow container mx-auto px-6 py-10 max-w-6xl">
+      
+      <!-- Feedback Toast -->
       <div 
         v-if="feedbackMessage" 
-        class="mb-6 p-4 rounded-md shadow-sm transition-all"
-        :class="{
-          'bg-green-100 text-green-800 border-l-4 border-green-500': feedbackType === 'success',
-          'bg-red-100 text-red-800 border-l-4 border-red-500': feedbackType === 'error'
-        }"
+        class="fixed top-20 right-6 bg-[#ffcc00] text-black px-6 py-3 rounded shadow-lg font-bold z-50 transition-opacity"
       >
         {{ feedbackMessage }}
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Sidebar: Form -->
-        <div class="lg:col-span-1">
-          <RecordForm 
-            :editing-record="editingRecord"
-            @save="handleSaveRecord"
-            @cancel="handleCancelEdit"
-          />
+      <!-- Hero Banner -->
+      <div class="border border-[#222] rounded-2xl p-8 md:p-12 mb-10 relative overflow-hidden bg-gradient-to-br from-[#111] to-[#0a0a0a]">
+        <div class="relative z-10 max-w-2xl">
+          <p class="text-[#ffcc00] font-black tracking-[0.2em] text-xs uppercase mb-4">Menu Management</p>
+          <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight">
+            Manage your <span class="text-[#ffcc00]">food menu</span> with ease.
+          </h1>
+          <p class="text-gray-400 leading-relaxed text-sm">
+            FoodFlow is a frontend prototype for managing food menu records. Add, search, update, and delete food items while keeping records saved in your browser.
+          </p>
         </div>
         
-        <!-- Main Area: List -->
-        <div class="lg:col-span-2 space-y-6">
-          <div class="bg-white p-4 rounded-lg shadow-md flex items-center justify-between">
-            <h2 class="text-xl font-semibold text-gray-800">Order History</h2>
-            <div class="relative w-64">
-              <input 
-                v-model="searchTerm" 
-                type="text" 
-                placeholder="Search orders..." 
-                class="w-full pl-10 pr-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
-              />
-              <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-            </div>
-          </div>
-          
-          <RecordList 
-            :records="filteredRecords"
-            @edit="handleEditRecord"
-            @delete="handleDeleteRecord"
-          />
-        </div>
+        <!-- Abstract Decoration -->
+        <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-[#ffcc00] opacity-5 rounded-full blur-3xl pointer-events-none"></div>
       </div>
+
+      <!-- Main Content Area -->
+      <div class="w-full">
+        <!-- The RecordList now takes full width as per the new layout since Add form is a modal -->
+        <RecordList 
+          :records="filteredRecords"
+          :searchTerm="searchTerm"
+          @update:searchTerm="searchTerm = $event"
+          @add="openAddModal"
+          @edit="handleEditRecord"
+          @delete="handleDeleteRecord"
+        />
+      </div>
+
+      <!-- Modal -->
+      <RecordForm 
+        :is-open="isModalOpen"
+        :editing-record="editingRecord"
+        @save="handleSaveRecord"
+        @cancel="handleCloseModal"
+      />
+      
     </main>
     
     <AppFooter />
