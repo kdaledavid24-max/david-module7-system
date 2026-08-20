@@ -1,7 +1,7 @@
 # Food Ordering System Frontend Prototype
 
-**Student:** Kristian Dale David
-**Section:** BSCS - 3A
+**Student:** Kristian Dale David  
+**Section:** BSCS - 3A  
 **Module:** Module 7 Design and Implementation
 
 ## System Description
