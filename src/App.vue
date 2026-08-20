@@ -18,11 +18,16 @@ onMounted(() => {
   } else {
     // Seed initial sample data
     records.value = [
-      { id: '1786605903038', customerName: 'Juan Dela Cruz', foodName: 'Classic Burger', category: 'Main Course', price: 150.00, status: 'Delivered', image: '/images/burger.jpg' },
-      { id: '1786605903039', customerName: 'Maria Santos', foodName: 'Iced Matcha Latte', category: 'Drinks', price: 120.00, status: 'Available', image: '/images/matcha.jpg' },
-      { id: '1786605903040', customerName: 'Carlos Reyes', foodName: 'Pepperoni Pizza', category: 'Main Course', price: 250.00, status: 'Preparing', image: '/images/pizza.jpg' },
-      { id: '1786605903041', customerName: 'Ana Garcia', foodName: 'Crispy Fries', category: 'Sides', price: 80.00, status: 'Pending', image: '/images/fries.jpg' },
-      { id: '1786605903042', customerName: 'Rico Mendoza', foodName: 'Classic Burger', category: 'Main Course', price: 150.00, status: 'Cancelled', image: '/images/burger.jpg' }
+      { id: '1786605903038', customerName: 'Juan Dela Cruz',    foodName: 'Classic Burger',       category: 'Main Course', price: 150.00, status: 'Delivered',  image: '/images/burger.jpg' },
+      { id: '1786605903039', customerName: 'Maria Santos',      foodName: 'Iced Matcha Latte',    category: 'Drinks',      price: 120.00, status: 'Available',  image: '/images/matcha.jpg' },
+      { id: '1786605903040', customerName: 'Carlos Reyes',      foodName: 'Pepperoni Pizza',      category: 'Main Course', price: 250.00, status: 'Preparing',  image: '/images/pizza.jpg' },
+      { id: '1786605903041', customerName: 'Ana Garcia',        foodName: 'Crispy Fries',         category: 'Sides',       price:  80.00, status: 'Pending',    image: '/images/fries.jpg' },
+      { id: '1786605903042', customerName: 'Rico Mendoza',      foodName: 'Classic Burger',       category: 'Main Course', price: 150.00, status: 'Cancelled',  image: '/images/burger.jpg' },
+      { id: '1786605903043', customerName: 'Lovely Aquino',     foodName: 'Pepperoni Pizza',      category: 'Main Course', price: 250.00, status: 'Delivered',  image: '/images/pizza.jpg' },
+      { id: '1786605903044', customerName: 'Bong Villanueva',   foodName: 'Iced Matcha Latte',    category: 'Drinks',      price: 120.00, status: 'Pending',    image: '/images/matcha.jpg' },
+      { id: '1786605903045', customerName: 'Trisha Lim',        foodName: 'Crispy Fries',         category: 'Sides',       price:  80.00, status: 'Preparing', image: '/images/fries.jpg' },
+      { id: '1786605903046', customerName: 'Andrei Castillo',   foodName: 'Classic Burger',       category: 'Main Course', price: 150.00, status: 'Ready',      image: '/images/burger.jpg' },
+      { id: '1786605903047', customerName: 'Jenny Pascual',     foodName: 'Iced Matcha Latte',    category: 'Drinks',      price: 120.00, status: 'Cancelled',  image: '/images/matcha.jpg' }
     ]
     saveRecords()
   }
@@ -123,7 +128,7 @@ const cancelledCount = computed(() => records.value.filter(r => r.status === 'Ca
             Manage your <span class="text-[#ffcc00]">food menu</span> with ease.
           </h1>
           <p class="text-gray-400 leading-relaxed text-sm">
-            FoodFlow is a frontend prototype for managing food menu records. Add, search, update, and delete food items while keeping records saved in your browser.
+            Welcome to <span class="text-white font-semibold">FoodFlow Restaurant</span> — where every order tells a story. Browse our handcrafted menu, track live order statuses, and keep your kitchen running smoothly. Add new dishes, update orders on the fly, and manage your full menu from one delicious dashboard.
           </p>
         </div>
         
