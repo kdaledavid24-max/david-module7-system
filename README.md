@@ -40,3 +40,11 @@ In Module 6, the three-tier architecture was designed, specifying a Vue.js front
 - **Backend Dependency**: Data is only saved locally in the browser. A future improvement is to implement the proposed Express API to persist data to a MongoDB database.
 - **Authentication**: There is no user login. Currently, any user visiting the interface has administrative privileges to edit or delete any order.
 - **Payment Processing**: The frontend calculates total amounts but does not yet integrate an online payment gateway.
+
+## 🧪 Testing
+- **Test command:** `npm run test:run`
+- **Build command:** `npm run build`
+- **Test status:** ✅ All tests passing
+- **Build status:** ✅ Build successful
+- **Defect status:** BUG-01 ✅ Fixed & Retested
+- **CI/CD:** GitHub Actions runs tests + build automatically
