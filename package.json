@@ -1,20 +1,24 @@
 {
-  "name": "david-module7-system",
+  "name": "FOOD ORDERING SYSTEM",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "test": "vitest",
+    "test:run": "vitest run"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.3",
-    "tailwindcss": "^4.3.3",
-    "vue": "^3.5.40"
+    "vue": "^3.4.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.8",
-    "vite": "^8.2.0"
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "@vue/test-utils": "^2.4.11",
+    "jsdom": "^30.0.1",
+    "tailwindcss": "^4.3.3",
+    "vite": "^6.0.0",
+    "vitest": "^4.1.11"
   }
 }
