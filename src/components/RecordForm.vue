@@ -73,8 +73,13 @@ const validate = () => {
   if (!form.value.customerName.trim()) errors.value.customerName = 'Customer name is required'
   if (!form.value.foodName) errors.value.foodName = 'Food selection is required'
   if (!form.value.category.trim()) errors.value.category = 'Category is required'
-  if (!form.value.price) errors.value.price = 'Price is required'
-  else if (isNaN(form.value.price) || Number(form.value.price) < 0) errors.value.price = 'Valid price is required'
+  
+  // Fixed validation: properly allows 0 as a valid price
+  if (form.value.price === '' || form.value.price === null || form.value.price === undefined) {
+    errors.value.price = 'Price is required'
+  } else if (isNaN(form.value.price) || Number(form.value.price) < 0) {
+    errors.value.price = 'Valid price is required'
+  }
   
   return Object.keys(errors.value).length === 0
 }
