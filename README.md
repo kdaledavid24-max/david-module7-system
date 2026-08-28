@@ -3,7 +3,7 @@
 **Student:** Kristian Dale David  
 **Section:** BSCS - 3A  
 **Module:** Module 7 Design and Implementation  
-**Live System:** [https://kdaledavid24-max.github.io/david-module7-system/](https://kdaledavid24-max.github.io/david-module7-system/)
+
 
 ## System Description
 This project is a functional frontend prototype for the **Food Ordering System**, originally proposed in Module 6. It translates the "Order" entity into a working Vue.js web application.
