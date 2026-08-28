@@ -2,7 +2,7 @@
 
 **Student:** Kristian Dale David  
 **Section:** BSCS - 3A  
-**Module 7:**Design and Implementation  
+**Module 7:** Design and Implementation  
 
 
 ## System Description
