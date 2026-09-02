@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>david-module9-Software_Evolution</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #d97706;
+      --primary-light: #fef3c7;
+      --primary-dark: #b45309;
+      --accent: #ffcc00;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --bg-page: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --code-bg: #0f172a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .document-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 60px 70px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      border: 1px solid var(--border-color);
+    }
+
+    /* Cover Page Header */
+    .cover-header {
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 30px;
+      margin-bottom: 40px;
+    }
+
+    .module-badge {
+      display: inline-block;
+      background: #0f172a;
+      color: #ffcc00;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px 24px;
+      background: #f1f5f9;
+      padding: 20px 24px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      font-size: 13.5px;
+    }
+
+    .meta-item strong {
+      color: #0f172a;
+      display: inline-block;
+      min-width: 140px;
+    }
+
+    /* Section Styling */
+    section {
+      margin-bottom: 44px;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h2 .section-num {
+      background: var(--primary);
+      color: white;
+      font-size: 13px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 800;
+    }
+
+    h3 {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 20px 0 10px 0;
+    }
+
+    p {
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: #334155;
+    }
+
+    ul, ol {
+      font-size: 14px;
+      margin: 10px 0 16px 24px;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px 0;
+      font-size: 13px;
+    }
+
+    th, td {
+      border: 1px solid #e2e8f0;
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    th {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    .badge-pass {
+      background: var(--success-bg);
+      color: var(--success);
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      border: 1px solid #86efac;
+    }
+
+    .badge-tag {
+      background: #e2e8f0;
+      color: #334155;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+
+    /* Code Blocks */
+    pre {
+      background: var(--code-bg);
+      color: #f8fafc;
+      padding: 16px 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      line-height: 1.5;
+      margin: 14px 0 20px 0;
+      border: 1px solid #334155;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      border: none;
+    }
+
+    /* Cards & Callouts */
+    .callout {
+      background: #fffbeb;
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 18px 0;
+      font-size: 13.5px;
+    }
+
+    .callout strong {
+      color: #92400e;
+    }
+
+    .print-btn-bar {
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .print-btn {
+      background: #0f172a;
+      color: #ffcc00;
+      border: none;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.2s;
+    }
+
+    .print-btn:hover {
+      background: #1e293b;
+      transform: translateY(-1px);
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      .document-container {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        max-width: 100%;
+      }
+      .print-btn-bar {
+        display: none;
+      }
+      h2 {
+        page-break-after: avoid;
+      }
+      pre, table {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="print-btn-bar">
+    <button class="print-btn" onclick="window.print()">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/><path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/></svg>
+      Print / Save as PDF
+    </button>
+  </div>
+
+  <div class="document-container">
+
+    <!-- Section 1: Cover Page -->
+    <div class="cover-header">
+      <div class="module-badge">Software Engineering • Module 9</div>
+      <h1>Software Evolution Evidence Report</h1>
+      <div class="subtitle">Controlled change after architecture, implementation, and testing</div>
+      
+      <div class="meta-grid">
+        <div class="meta-item"><strong>Student Name:</strong> Kristian Dale David</div>
+        <div class="meta-item"><strong>Course & Section:</strong> BSCS - 3A</div>
+        <div class="meta-item"><strong>Subject:</strong> Software Engineering 1</div>
+        <div class="meta-item"><strong>Project Title:</strong> Food Ordering System Prototype</div>
+        <div class="meta-item"><strong>Primary Entity:</strong> Order / Food Item</div>
+        <div class="meta-item"><strong>Target Release:</strong> v1.1.0 (Evolution)</div>
+        <div class="meta-item" style="grid-column: span 2;">
+          <strong>GitHub Repository:</strong> 
+          <a href="https://github.com/kdaledavid24-max/david-module7-system.git" target="_blank" style="color: var(--primary); word-break: break-all;">https://github.com/kdaledavid24-max/david-module7-system.git</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Previous Baseline -->
+    <section>
+      <h2><span class="section-num">2</span> Previous Baseline (Modules 6, 7, and 8 Summary)</h2>
+      <p>The Food Ordering System was developed across three progressive phases before undergoing software evolution:</p>
+      <ul>
+        <li><strong>Module 6 — Architectural Design:</strong> Established the 3-tier architecture (Vue.js Presentation Layer, Express REST Application Layer, and MongoDB Data Persistence) with primary entity definitions (<code>Order</code> / <code>Food Item</code>).</li>
+        <li><strong>Module 7 — Design & Implementation:</strong> Developed the working frontend vertical slice in Vue 3 and Tailwind CSS, utilizing browser <code>localStorage</code> (<code>module7-records</code>) for persistent CRUD actions (Add, View, Edit, Delete with prompt, and Text Search).</li>
+        <li><strong>Module 8 — Software Testing:</strong> Verified baseline operations using 10 manual test cases, automated Vitest unit testing, resolved defect <code>BUG-01</code> (price 0 input validation), and configured GitHub Actions CI.</li>
+      </ul>
+    </section>
+
+    <!-- Section 3: Change Request -->
+    <section>
+      <h2><span class="section-num">3</span> Change Request (CR-M9-01)</h2>
+      <table>
+        <tr>
+          <th style="width: 28%;">Field</th>
+          <th>Specification</th>
+        </tr>
+        <tr>
+          <td><strong>Change Request ID</strong></td>
+          <td><code>CR-M9-01</code></td>
+        </tr>
+        <tr>
+          <td><strong>Title & Type</strong></td>
+          <td>Interactive Multi-Status & Category Filtering Dashboard with Safe LocalStorage Backward Compatibility • <strong>Perfective Maintenance</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Problem / Opportunity</strong></td>
+          <td>The previous baseline lacked status and category filtering controls. Users had to manually type text in the search bar. Summary metrics at the top were non-interactive. Older localStorage records needed safe schema migration defaults.</td>
+        </tr>
+        <tr>
+          <td><strong>Desired Outcome</strong></td>
+          <td>Empower kitchen and restaurant managers to instantly filter orders by status (Pending, Preparing, Ready, Delivered, Cancelled) and category with single-click tabs, clickable dashboard cards, and safe backward data compatibility.</td>
+        </tr>
+        <tr>
+          <td><strong>Acceptance Criteria</strong></td>
+          <td>
+            1. Status pill tabs filter records table to only show selected status.<br>
+            2. Dashboard summary cards are clickable and immediately activate the matching status filter.<br>
+            3. Search bar keyword + Status filter + Category dropdown work concurrently.<br>
+            4. Older localStorage records lacking attributes default safely without errors.<br>
+            5. All baseline CRUD functions remain 100% operational without regression.
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Priority & Rationale</strong></td>
+          <td><strong>High</strong> — Streamlines kitchen operations and prevents UI crashes from legacy stored data.</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- Section 4: Impact Analysis -->
+    <section>
+      <h2><span class="section-num">4</span> Impact Analysis Matrix</h2>
+      <table>
+        <tr>
+          <th>Area</th>
+          <th>Analysis Question / Impact Finding</th>
+          <th>Evolution Mitigation & Action</th>
+        </tr>
+        <tr>
+          <td><strong>Architecture</strong></td>
+          <td>Which component, state flow, or storage boundary changes?</td>
+          <td><code>App.vue</code> manages <code>selectedStatus</code> and <code>selectedCategory</code>. Storage boundary remains client-side <code>localStorage</code>.</td>
+        </tr>
+        <tr>
+          <td><strong>Design / UI</strong></td>
+          <td>Which form, table, button, filter, or responsive layout changes?</td>
+          <td>Added status filter pills, category dropdown, clickable top cards, active indicators, and dynamic empty-state feedback.</td>
+        </tr>
+        <tr>
+          <td><strong>Implementation</strong></td>
+          <td>Which Vue components, composables, or utilities change?</td>
+          <td>Updated <code>App.vue</code> (computed filter engine & normalization) and <code>RecordList.vue</code> (filter controls).</td>
+        </tr>
+        <tr>
+          <td><strong>Data Compatibility</strong></td>
+          <td>Will older localStorage records remain readable and valid?</td>
+          <td>Implemented <code>normalizeRecords()</code> on mount, assigning fallback defaults (<code>status: 'Pending'</code>, <code>image: null</code>).</td>
+        </tr>
+        <tr>
+          <td><strong>Testing</strong></td>
+          <td>Which Module 8 test cases must be updated, retained, or added?</td>
+          <td>Retained all 10 Module 8 baseline cases; added 4 new cases (14 total) plus Vitest automated filter tests.</td>
+        </tr>
+        <tr>
+          <td><strong>CI / Build</strong></td>
+          <td>Will <code>npm run test:run</code> and <code>npm run build</code> pass?</td>
+          <td>11 Vitest tests pass (100%), Vite build completes with zero errors.</td>
+        </tr>
+        <tr>
+          <td><strong>Documentation</strong></td>
+          <td>Which README section or release note becomes outdated?</td>
+          <td>Updated <code>README.md</code>, bumped <code>package.json</code> to v1.1.0, and generated this report.</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- Section 5: Updated Architecture -->
+    <section>
+      <h2><span class="section-num">5</span> Updated Architecture — Module 9</h2>
+      <p>The architecture evolves cleanly within the presentation layer while strictly maintaining the client-side boundary and component separation:</p>
+      
+      <div class="callout">
+        <strong>Architectural Traceability:</strong><br>
+        • <code>AppHeader.vue</code> & <code>AppFooter.vue</code>: Layout shell (Unchanged).<br>
+        • <code>RecordForm.vue</code>: Modal input validation and record emitter (Unchanged).<br>
+        • <code>App.vue</code>: Central state store, <code>normalizeRecords()</code> migration, and multi-facet computed filter engine (Evolved).<br>
+        • <code>RecordList.vue</code>: Status pill navigation, category selector, and data table (Evolved).
+      </div>
+    </section>
+
+    <!-- Section 6: Design and Working Implementation -->
+    <section>
+      <h2><span class="section-num">6</span> Design and Working Implementation</h2>
+      <h3>Key Implementation Code: Safe LocalStorage Normalization (App.vue)</h3>
+      <pre><code>const normalizeRecords = (storedData) => {
+  if (!Array.isArray(storedData)) return []
+  return storedData.map(record => ({
+    id: record.id || Date.now().toString(),
+    customerName: record.customerName || 'Anonymous',
+    foodName: record.foodName || 'Food Item',
+    category: record.category || 'General',
+    price: Number(record.price) >= 0 ? Number(record.price) : 0,
+    status: record.status || 'Pending', // Safe default for older saved records lacking status
+    image: record.image || null,
+    ...record
+  }))
+}</code></pre>
+
+      <h3>Key Implementation Code: Multi-Facet Reactive Filter Engine (App.vue)</h3>
+      <pre><code>const filteredRecords = computed(() => {
+  const keyword = searchTerm.value.toLowerCase().trim()
+  
+  return records.value.filter(record => {
+    const matchesKeyword = !keyword || (
+      record.foodName?.toLowerCase().includes(keyword) ||
+      record.category?.toLowerCase().includes(keyword) ||
+      (record.customerName && record.customerName.toLowerCase().includes(keyword))
+    )
+
+    const matchesStatus = selectedStatus.value === 'All' || 
+      (selectedStatus.value === 'Ready' && (record.status === 'Ready' || record.status === 'Available')) ||
+      (selectedStatus.value === 'Cancelled' && (record.status === 'Cancelled' || record.status === 'Unavailable')) ||
+      record.status === selectedStatus.value
+
+    const matchesCategory = selectedCategory.value === 'All' || record.category === selectedCategory.value
+
+    return matchesKeyword && matchesStatus && matchesCategory
+  })
+})</code></pre>
+    </section>
+
+    <!-- Section 7: Updated Test Cases -->
+    <section>
+      <h2><span class="section-num">7</span> Updated Test Cases and Regression Evidence</h2>
+      <p>The test plan contains <strong>14 comprehensive manual test cases</strong> covering new feature verification, boundary cases, regression, responsive UI, and data compatibility:</p>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Test ID</th>
+            <th>Feature / Purpose</th>
+            <th>Scenario Description</th>
+            <th>Expected Result</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>TC-01</strong></td>
+            <td><span class="badge-tag">Regression</span> Create</td>
+            <td>Add a valid food order</td>
+            <td>Order added to table; count increments</td>
+            <td><span class="badge-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>TC-02</strong></td>
+            <td><span class="badge-tag">Regression</span> Validation</td>
+            <td>Reject missing customer name</td>
+            <td>Validation error message displayed; blocked</td>
+            <td><span class="badge-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>TC-03</strong></td>
+            <td><span class="badge-tag">Regression</span> Boundary</td>
+            <td>Reject negative price / accept 0</td>
+            <td>Rejects negative price; accepts valid 0</td>
+            <td><span class="badge-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>TC-04</strong></td>
+            <td><span class="badge-tag">Regression</span> Read</td>
+            <td>Display multiple food records</td>
+            <td>Table renders all items with badges & images</td>
+            <td><span class="badge-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>TC-05</strong></td>
+            <td><span class="badge-tag">Regression</span> Update</td>
+            <td>Edit existing order status & price</td>
+            <td>Record updated in place without duplicate</td>
+            <td><span class="badge-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>TC-06</strong></td>
+            <td><span class="badge-tag">Regression</span> Delete Guard</td>
+            <td>Cancel delete confirmation prompt</td>
+            <td>Record remains preserved in table</td>
+            <td><span class="badge-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>TC-07</strong></td>
+            <td><span class="badge-tag">Regression</span> Delete</td>
+            <td>Confirm deletion of food order</td>
+            <td>Record deleted; summary metrics update</td>
+            <td><span class="badge-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>TC-08</strong></td>
+            <td><span class="badge-tag">Regression</span> Search</td>
+            <td>Search by matching keyword</td>
+            <td>Filters table rows to matching records</td>
+            <td><span class="badge-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>TC-09</strong></td>
+            <td><span class="badge-tag">Regression</span> Empty State</td>
+            <td>Search for missing food order</td>
+            <td>Contextual empty state with reset button</td>
+            <td><span class="badge-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>TC-010</strong></td>
+            <td><span class="badge-tag">Regression</span> Persistence</td>
+            <td>Verify localStorage across reload</td>
+            <td>Orders persist intact across page refresh</td>
+            <td><span class="badge-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>TC-11</strong></td>
+            <td><span class="badge-tag">Regression</span> Responsive</td>
+            <td>Check layout on mobile (375px)</td>
+            <td>Grid stacks; table scrolls smoothly</td>
+            <td><span class="badge-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>TC-12</strong></td>
+            <td><span class="badge-tag">Regression</span> Metrics</td>
+            <td>Verify dynamic count calculation</td>
+            <td>Summary cards update dynamically</td>
+            <td><span class="badge-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>TC-13</strong></td>
+            <td><span class="badge-tag">CR-M9-01</span> Status Filter</td>
+            <td>Filter by status pills & metric cards</td>
+            <td>Table displays only matching status orders</td>
+            <td><span class="badge-pass">PASS</span></td>
+          </tr>
+          <tr>
+            <td><strong>TC-14</strong></td>
+            <td><span class="badge-tag">CR-M9-01</span> Compatibility</td>
+            <td>Normalize legacy localStorage records</td>
+            <td>Older records load with safe default status</td>
+            <td><span class="badge-pass">PASS</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Automated Vitest Test Evidence</h3>
+      <pre><code> ✓ src/tests/food-ordering.test.js (9 tests)
+   ✓ should successfully add a new food order record
+   ✓ should display saved food records
+   ✓ should successfully edit a food record
+   ✓ should successfully delete a food record
+   ✓ should find a food record using the search text
+   ✓ should accept price 0 as a valid food price
+   ✓ CR-M9-01: should filter food records by specific status (Delivered)
+   ✓ CR-M9-01: should support combined search keyword and status filter
+   ✓ CR-M9-01: should safely normalize older/legacy localStorage records without status
+ ✓ src/filterRecords.test.js (2 tests)
+   ✓ returns matching records when keyword matches
+   ✓ ignores letter case and trims spaces
+
+ Test Files  2 passed (2)
+      Tests  11 passed (11)</code></pre>
+    </section>
+
+    <!-- Section 8: Release Evidence -->
+    <section>
+      <h2><span class="section-num">8</span> Release Evidence, Versioning & Live Deployment</h2>
+      
+      <!-- GitHub Pull Request Merge Banner (Matches Live GitHub Interface) -->
+      <div style="background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 14px 18px; margin: 18px 0; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 600; color: #f0f6fc;">
+            <span>Merge pull request <a href="https://github.com/kdaledavid24-max/david-module7-system/pull/1" target="_blank" style="color: #58a6ff; text-decoration: none;">#1</a> from <span style="color: #f0f6fc;">kdaledavid24-max/module9/software-evolution</span></span>
+            <span style="background: #21262d; color: #8b949e; font-size: 10px; padding: 1px 5px; border-radius: 4px; border: 1px solid #30363d; cursor: pointer;">•••</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8b949e;">
+            <div style="width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #3b82f6); display: flex; align-items: center; justify-content: center; color: white; font-size: 9px; font-weight: bold;">
+              KD
+            </div>
+            <strong style="color: #c9d1d9; font-weight: 600;">kdaledavid24-max</strong>
+            <span>authored</span>
+            <span>·</span>
+            <span style="color: #3fb950; font-weight: 600; display: inline-flex; align-items: center; gap: 3px;">
+              <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg>
+              2 / 2
+            </span>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="display: inline-flex; align-items: center; border: 1px solid #238636; color: #3fb950; background: rgba(35,134,54,0.15); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 12px;">
+            Verified
+          </span>
+          <div style="display: inline-flex; align-items: center; gap: 6px; background: #21262d; border: 1px solid #30363d; padding: 3px 8px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #58a6ff;">
+            <span>709d118</span>
+            <svg width="12" height="12" fill="#8b949e" viewBox="0 0 16 16" style="cursor: pointer;"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path></svg>
+            <svg width="12" height="12" fill="#8b949e" viewBox="0 0 16 16" style="cursor: pointer;"><path d="m11.28 3.22 4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L13.94 8l-3.72-3.72a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215Zm-6.56 0a.751.751 0 0 1 1.06 1.06L2.06 8l3.72 3.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25Z"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Deployment & Actual System Walkthrough -->
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px 24px; margin-top: 18px;">
+        <h3 style="margin-top: 0; color: #0f172a; font-size: 16px; display: flex; align-items: center; gap: 8px;">
+          🌐 Live System URL & User Access Workflow
+        </h3>
+        <p style="margin-bottom: 12px;">
+          The evolved application is continuously deployed via GitHub Pages and is accessible to all stakeholders at the official live URL:
+        </p>
+        <p style="font-size: 15px; margin-bottom: 14px;">
+          🔗 <strong>Live Demo URL:</strong> 
+          <a href="https://kdaledavid24-max.github.io/david-module7-system/" target="_blank" style="color: #d97706; font-weight: 700; text-decoration: underline;">
+            https://kdaledavid24-max.github.io/david-module7-system/
+          </a>
+        </p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 14px;">
+          <div style="background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px;">
+            <div style="font-weight: 700; color: #0f172a; font-size: 13.5px; margin-bottom: 6px;">
+              Step 1: FoodFlow Authentication Portal (Initial View)
+            </div>
+            <p style="font-size: 12.5px; color: #475569; margin-bottom: 0;">
+              Visiting the live link immediately renders the <strong>LoginPage.vue</strong> interface featuring a split-screen layout with an animated food showcase carousel (Pizza, Gourmet Burgers, Artisan Drinks, Crispy Sides) on the left and a quick Sign In / Registration form on the right. Users can enter their credentials or quick-access to proceed.
+            </p>
+          </div>
+
+          <div style="background: white; border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px;">
+            <div style="font-weight: 700; color: #0f172a; font-size: 13.5px; margin-bottom: 6px;">
+              Step 2: Evolved Multi-Status Dashboard (Authenticated)
+            </div>
+            <p style="font-size: 12.5px; color: #475569; margin-bottom: 0;">
+              Upon authentication, the system opens the full <strong>FoodFlow Management Dashboard</strong> containing the evolved 7-status filter pills (<code>All</code>, <code>Pending</code>, <code>Preparing</code>, <code>Ready</code>, <code>Delivered</code>, <code>Available</code>, <code>Cancelled</code>), category dropdown, live counters, search bar, and full CRUD modal controls.
+            </p>
+          </div>
+        </div>
+
+        <ul style="margin-top: 16px; margin-bottom: 0;">
+          <li><strong>Semantic Version:</strong> <code>1.1.0</code> (MINOR bump for backward-compatible perfective filtering & schema normalization).</li>
+          <li><strong>Build Verification:</strong> <code>npm run build</code> transforms 16 modules into optimized production bundles cleanly.</li>
+          <li><strong>Pull Request Merge:</strong> PR #1 successfully merged from <code>kdaledavid24-max/module9/software-evolution</code> into <code>main</code> (Commit <code>709d118</code>).</li>
+          <li><strong>Automated CI Pipeline:</strong> Green passing status on all 11 Vitest unit tests and GitHub Actions deployment workflow.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Section 9: Reflection -->
+    <section>
+      <h2><span class="section-num">9</span> Reflection & Lehman's Laws Analysis</h2>
+      <p>
+        During Module 9, software evolution demonstrated that modifying a live system differs fundamentally from greenfield development. By applying Lehman's laws of <em>Continuing Change</em>, <em>Increasing Complexity</em>, and <em>Conservation of Familiarity</em>, we enhanced the food ordering interface with multi-facet filtering while actively refactoring data parsing routines. Safe schema normalization protected existing user data in <code>localStorage</code>, and automated regression tests guaranteed zero unintended side effects.
+      </p>
+    </section>
+
+    <!-- Section 10: Knowledge Check -->
+    <section>
+      <h2><span class="section-num">10</span> Module 9 Knowledge Check Answers</h2>
+      <div style="font-size: 13.5px; line-height: 1.6;">
+        <p><strong>1. Why must Module 9 reuse the same system from Modules 6 to 8?</strong><br>
+        <em>Answer:</em> Software evolution is the discipline of modifying an established, working baseline. Reusing the same system ensures practical experience in preserving architecture, protecting stored user data, and guarding against regression.</p>
+
+        <p><strong>2. What is the difference between corrective and preventive maintenance?</strong><br>
+        <em>Answer:</em> Corrective maintenance fixes existing runtime defects or bugs discovered during testing or user operation. Preventive maintenance refactors internal code structure to reduce technical debt and simplify future changes without altering observable behavior.</p>
+
+        <p><strong>3. Which artifacts should be examined during impact analysis?</strong><br>
+        <em>Answer:</em> Architecture diagrams, UI/UX layouts, Vue source components, localStorage storage schemas, manual and automated test suites, CI/CD build scripts, and release documentation.</p>
+
+        <p><strong>4. Why must the Module 8 test baseline be retained?</strong><br>
+        <em>Answer:</em> The Module 8 test baseline serves as the primary regression safety net, verifying that new changes did not break existing CRUD and persistence functionality.</p>
+
+        <p><strong>5. When should a backward-compatible feature increment the MINOR version?</strong><br>
+        <em>Answer:</em> Under Semantic Versioning (SemVer), a MINOR increment (e.g. 1.0.0 to 1.1.0) is mandated whenever new functionality or capability is added in a backward-compatible manner.</p>
+
+        <p><strong>6. What evidence proves that an evolved system did not introduce regression?</strong><br>
+        <em>Answer:</em> 100% passing results across the complete manual test suite, green automated Vitest unit/regression tests, successful production builds, and passing CI workflows.</p>
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>

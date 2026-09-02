@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>David_KristianDale_Module9_Software_Evolution</title>
+  <style>
+    @page { size: A4 portrait; margin: 18mm 18mm 18mm 18mm; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 11pt;
+      color: #000000;
+      background: #ffffff;
+      line-height: 1.45;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 18mm 18mm 18mm 18mm;
+      background: #ffffff;
+    }
+
+    .section-title {
+      font-size: 12pt;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .cr-meta {
+      margin-left: 24px;
+      margin-bottom: 12px;
+      font-size: 11pt;
+    }
+
+    .cr-meta p { margin-bottom: 2px; }
+
+    h3.sub {
+      font-size: 11pt;
+      font-weight: bold;
+      margin-top: 12px;
+      margin-bottom: 4px;
+      text-decoration: underline;
+    }
+
+    p.body-text {
+      text-indent: 36px;
+      margin-bottom: 8px;
+      text-align: justify;
+      font-size: 11pt;
+    }
+
+    ol.criteria {
+      margin-left: 48px;
+      margin-bottom: 10px;
+      font-size: 11pt;
+    }
+
+    ol.criteria li { margin-bottom: 3px; }
+
+    .page-break { page-break-before: always; }
+
+    .school-header-wrapper {
+      border: 2px solid #000000;
+      margin-bottom: 0;
+    }
+
+    .school-header-inner {
+      display: flex;
+      align-items: center;
+      padding: 6px 10px;
+      gap: 10px;
+    }
+
+    .school-logos {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .logo-circle {
+      width: 52px;
+      height: 52px;
+      border: 2px solid #1a3a6b;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 6pt;
+      font-weight: bold;
+      color: #1a3a6b;
+      text-align: center;
+      background: #f0f4ff;
+      padding: 4px;
+      line-height: 1.2;
+    }
+
+    .school-text-block {
+      flex: 1;
+      text-align: center;
+    }
+
+    .school-name {
+      font-size: 14pt;
+      font-weight: 900;
+      color: #cc0000;
+      font-family: Arial, sans-serif;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
+
+    .school-dept {
+      font-size: 10pt;
+      font-weight: 800;
+      color: #000000;
+      font-family: Arial, sans-serif;
+      margin-top: 1px;
+    }
+
+    .school-addr {
+      font-size: 7.5pt;
+      color: #000000;
+      font-family: Arial, sans-serif;
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    .school-motto {
+      font-size: 7.5pt;
+      font-weight: bold;
+      color: #cc0000;
+      font-family: Arial, sans-serif;
+      margin-top: 2px;
+      font-style: italic;
+    }
+
+    .student-activity-banner {
+      background-color: #1a3a6b;
+      color: #ffffff;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-weight: 900;
+      font-size: 11pt;
+      letter-spacing: 2px;
+      padding: 5px 0;
+      border: 2px solid #000000;
+      border-top: none;
+    }
+
+    .p2-content { margin-top: 16px; }
+
+    h4.p2-label {
+      font-size: 11pt;
+      font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 2px;
+    }
+
+    p.p2-body {
+      text-indent: 36px;
+      text-align: justify;
+      font-size: 11pt;
+      margin-bottom: 8px;
+    }
+
+    h3.table-heading {
+      font-size: 11pt;
+      font-weight: bold;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+
+    table.affected {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10.5pt;
+      margin-bottom: 10px;
+    }
+
+    table.affected th, table.affected td {
+      border: 1px solid #000000;
+      padding: 5px 8px;
+      vertical-align: top;
+    }
+
+    table.affected th {
+      background: #d9d9d9;
+      font-weight: bold;
+      text-align: center;
+      width: 28%;
+    }
+
+    table.affected td:first-child {
+      font-weight: bold;
+      width: 28%;
+    }
+
+    table.tests {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9.5pt;
+      margin-bottom: 10px;
+    }
+
+    table.tests th, table.tests td {
+      border: 1px solid #000000;
+      padding: 4px 6px;
+      vertical-align: top;
+    }
+
+    table.tests th {
+      background: #d9d9d9;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .pass { color: #007700; font-weight: bold; }
+
+    .code-block {
+      background: #f4f4f4;
+      border: 1px solid #cccccc;
+      padding: 10px 12px;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 9pt;
+      white-space: pre-wrap;
+      margin: 10px 0;
+      line-height: 1.4;
+    }
+
+    .print-btn-wrap {
+      text-align: right;
+      padding: 12px 18mm;
+      max-width: 210mm;
+      margin: 0 auto;
+    }
+
+    .print-btn {
+      background: #1a3a6b;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .print-btn:hover { background: #0d2a55; }
+
+    @media print {
+      .print-btn-wrap { display: none; }
+      body { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="print-btn-wrap">
+  <button class="print-btn" onclick="window.print()">🖨 Print / Save as PDF</button>
+</div>
+
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="section-title">Change Request &mdash; CR-M9-01</div>
+  <div class="cr-meta">
+    <p><strong>Change Request ID:</strong> CR-M9-01</p>
+    <p><strong>Title:</strong> Add Multi-Status &amp; Category Food Order Filter</p>
+    <p><strong>Maintenance Type:</strong> Perfective Maintenance</p>
+  </div>
+
+  <h3 class="sub">Problem / Opportunity</h3>
+  <p class="body-text">
+    The current FoodFlow Food Ordering System displays food order records but does not
+    provide a filter that allows users to quickly view records according to their preparation
+    status. As the number of food orders increases, kitchen staff and managers may need a
+    faster way to distinguish pending, preparing, ready, and delivered orders from cancelled items.
+  </p>
+
+  <h3 class="sub">Desired Outcome</h3>
+  <p class="body-text">
+    Add an <strong>All</strong>, <strong>Pending</strong>, <strong>Preparing</strong>,
+    <strong>Ready</strong>, <strong>Delivered</strong>, <strong>Available</strong>, and
+    <strong>Cancelled</strong> filter to the food records section. The filter should allow
+    users to quickly view food records by status while preserving the existing CRUD, search,
+    validation, delete confirmation, and localStorage functionality.
+  </p>
+
+  <h3 class="sub">Acceptance Criteria</h3>
+  <ol class="criteria">
+    <li>The food records section provides <strong>All, Pending, Preparing, Ready, Delivered, Available,</strong> and <strong>Cancelled</strong> filter options.</li>
+    <li>Selecting <strong>Pending</strong> displays only food records marked as Pending.</li>
+    <li>Selecting <strong>Delivered</strong> displays only food records marked as Delivered.</li>
+    <li>Selecting <strong>All</strong> displays all food order records.</li>
+    <li>Existing <strong>Add, Display, Edit, Delete, Search, Validation, Delete Confirmation, and Persistence</strong> functions continue to work correctly.</li>
+  </ol>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page page-break">
+  <div class="school-header-wrapper">
+    <div class="school-header-inner">
+      <div class="school-logos">
+        <div class="logo-circle">CHCC<br>SEAL</div>
+        <div class="logo-circle">SCS<br>LOGO</div>
+      </div>
+      <div class="school-text-block">
+        <div class="school-name">CONCEPCION HOLY CROSS COLLEGE, INC.</div>
+        <div class="school-dept">SCHOOL OF COMPUTER STUDIES</div>
+        <div class="school-addr">Juan Luna St., Minane, Concepcion, Tarlac<br>Tel No. 045-923-0747 | E-Mail Address: concepcionholycrosscollege@yahoo.com</div>
+        <div class="school-motto">Competence | Holistic education | Compassion | Commitment</div>
+      </div>
+    </div>
+  </div>
+  <div class="student-activity-banner">STUDENT ACTIVITY</div>
+
+  <div class="p2-content">
+    <h4 class="p2-label">Priority</h4>
+    <p style="font-size:11pt; margin-bottom:2px;">Medium&ndash;High</p>
+
+    <h4 class="p2-label">Rationale</h4>
+    <p class="p2-body">
+      The proposed change improves the usability of the existing FoodFlow Food Ordering
+      System by allowing kitchen staff and managers to quickly organize and view orders
+      according to their live preparation status. The change is small and controlled and does
+      not require replacing the existing system, database, or overall architecture.
+    </p>
+
+    <h3 class="table-heading">Affected Areas</h3>
+    <table class="affected">
+      <thead>
+        <tr>
+          <th>Area</th>
+          <th>Expected Impact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Architecture</td>
+          <td>Food order list and filtering flow will be updated.</td>
+        </tr>
+        <tr>
+          <td>Design / UI</td>
+          <td>An All/Pending/Preparing/Ready/Delivered/Cancelled filter control will be added to the food records section.</td>
+        </tr>
+        <tr>
+          <td>Implementation</td>
+          <td>Food order status handling and filtering logic will be added.</td>
+        </tr>
+        <tr>
+          <td>localStorage</td>
+          <td>Existing food records must remain readable and usable. Older records without a status should receive a safe default of Pending.</td>
+        </tr>
+        <tr>
+          <td>Testing</td>
+          <td>New filter test cases will be added while existing Module 8 regression tests will be retained.</td>
+        </tr>
+        <tr>
+          <td>CI / Build</td>
+          <td>Automated tests, production build, and GitHub Actions must remain successful.</td>
+        </tr>
+        <tr>
+          <td>Documentation</td>
+          <td>README, architecture evidence, test cases, and release notes will be updated.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page page-break">
+  <div class="school-header-wrapper">
+    <div class="school-header-inner">
+      <div class="school-logos">
+        <div class="logo-circle">CHCC<br>SEAL</div>
+        <div class="logo-circle">SCS<br>LOGO</div>
+      </div>
+      <div class="school-text-block">
+        <div class="school-name">CONCEPCION HOLY CROSS COLLEGE, INC.</div>
+        <div class="school-dept">SCHOOL OF COMPUTER STUDIES</div>
+        <div class="school-addr">Juan Luna St., Minane, Concepcion, Tarlac<br>Tel No. 045-923-0747 | E-Mail Address: concepcionholycrosscollege@yahoo.com</div>
+        <div class="school-motto">Competence | Holistic education | Compassion | Commitment</div>
+      </div>
+    </div>
+  </div>
+  <div class="student-activity-banner">STUDENT ACTIVITY</div>
+
+  <div class="p2-content">
+    <h3 class="table-heading">Impact Analysis</h3>
+
+    <h4 class="p2-label">Architecture</h4>
+    <p class="p2-body">The existing FoodFlow Food Ordering System architecture will remain unchanged at the overall system level. The food record list and filtering flow will be updated to support multi-status and category filtering using reactive computed properties in Vue.js.</p>
+
+    <h4 class="p2-label">Design / User Interface</h4>
+    <p class="p2-body">An interactive status pill filter control (All, Pending, Preparing, Ready, Delivered, Available, Cancelled) and a category dropdown selector will be added to the food records section. The new controls will follow the existing visual design and responsive layout.</p>
+
+    <h4 class="p2-label">Implementation</h4>
+    <p class="p2-body">The food order handling logic in <em>App.vue</em> and <em>RecordList.vue</em> will be updated to support status values and filtered results using Vue 3 Composition API. A safe schema normalizer (<code>normalizeRecords()</code>) will be added to handle older stored records on mount.</p>
+
+    <h4 class="p2-label">Data / localStorage</h4>
+    <p class="p2-body">Existing food records must remain readable after the change. Records that do not yet contain a status value will receive a safe default of <strong>Pending</strong> so that previously stored data continues to function without errors or data loss.</p>
+
+    <h4 class="p2-label">Testing</h4>
+    <p class="p2-body">The Module 8 baseline tests will be fully retained as regression tests. New test cases will verify status filtering, category filtering, combined keyword searching, and schema normalization. The final test plan will contain <strong>14 manual test cases</strong> and <strong>11 automated Vitest unit tests</strong>.</p>
+
+    <h4 class="p2-label">CI / Build</h4>
+    <p class="p2-body">The project will be verified using <code>npm run test:run</code> and <code>npm run build</code>. GitHub Actions will also be checked to confirm that the evolved version passes all automated workflow steps before deployment.</p>
+
+    <h4 class="p2-label">Documentation</h4>
+    <p class="p2-body">The architecture documentation, manual test cases, <em>README.md</em>, release notes, and this final evidence PDF will be updated to reflect the implemented changes in CR-M9-01 and release version <strong>1.1.0</strong>.</p>
+  </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page page-break">
+  <div class="school-header-wrapper">
+    <div class="school-header-inner">
+      <div class="school-logos">
+        <div class="logo-circle">CHCC<br>SEAL</div>
+        <div class="logo-circle">SCS<br>LOGO</div>
+      </div>
+      <div class="school-text-block">
+        <div class="school-name">CONCEPCION HOLY CROSS COLLEGE, INC.</div>
+        <div class="school-dept">SCHOOL OF COMPUTER STUDIES</div>
+        <div class="school-addr">Juan Luna St., Minane, Concepcion, Tarlac<br>Tel No. 045-923-0747 | E-Mail Address: concepcionholycrosscollege@yahoo.com</div>
+        <div class="school-motto">Competence | Holistic education | Compassion | Commitment</div>
+      </div>
+    </div>
+  </div>
+  <div class="student-activity-banner">STUDENT ACTIVITY</div>
+
+  <div class="p2-content">
+    <h3 class="table-heading">Manual Test Cases (14 Test Cases — All Passed)</h3>
+    <table class="tests">
+      <thead>
+        <tr>
+          <th>Test ID</th>
+          <th>Category</th>
+          <th>Test Objective</th>
+          <th>Expected Result</th>
+          <th>Actual Result</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>TC-01</td><td>Create</td><td>Add valid food order</td><td>Record added; count increments</td><td>Record added successfully</td><td class="pass">PASS</td></tr>
+        <tr><td>TC-02</td><td>Validation</td><td>Empty name rejected</td><td>Error message displayed</td><td>Validation blocked submission</td><td class="pass">PASS</td></tr>
+        <tr><td>TC-03</td><td>Boundary</td><td>Price 0 accepted; negative rejected</td><td>Boundary handled correctly</td><td>Boundary handled correctly</td><td class="pass">PASS</td></tr>
+        <tr><td>TC-04</td><td>Read</td><td>Display all food records</td><td>All records rendered in table</td><td>All records rendered cleanly</td><td class="pass">PASS</td></tr>
+        <tr><td>TC-05</td><td>Update</td><td>Edit food order status</td><td>Record updated in place</td><td>Updated without duplicate</td><td class="pass">PASS</td></tr>
+        <tr><td>TC-06</td><td>Delete Guard</td><td>Cancel delete confirmation</td><td>Record preserved</td><td>Record untouched</td><td class="pass">PASS</td></tr>
+        <tr><td>TC-07</td><td>Delete</td><td>Confirm deletion</td><td>Record removed from table</td><td>Record removed; counts updated</td><td class="pass">PASS</td></tr>
+        <tr><td>TC-08</td><td>Search</td><td>Search by keyword</td><td>Matching record displayed</td><td>Matching record shown</td><td class="pass">PASS</td></tr>
+        <tr><td>TC-09</td><td>Empty State</td><td>Search returns no results</td><td>Empty state message shown</td><td>Empty state shown correctly</td><td class="pass">PASS</td></tr>
+        <tr><td>TC-10</td><td>Persistence</td><td>Data persists on page reload</td><td>Records remain after reload</td><td>Records preserved intact</td><td class="pass">PASS</td></tr>
+        <tr><td>TC-11</td><td>Responsive</td><td>Layout on mobile/desktop</td><td>Usable on all screen sizes</td><td>Layout maintained cleanly</td><td class="pass">PASS</td></tr>
+        <tr><td>TC-12</td><td>Live Metrics</td><td>Summary counters update</td><td>Counts update on changes</td><td>Counts updated dynamically</td><td class="pass">PASS</td></tr>
+        <tr><td>TC-13</td><td>Status Filter</td><td>Filter records by status</td><td>Only matching status shown</td><td>Correct records filtered</td><td class="pass">PASS</td></tr>
+        <tr><td>TC-14</td><td>Compatibility</td><td>Legacy records normalized</td><td>Older records get safe default</td><td>Normalized without errors</td><td class="pass">PASS</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="table-heading">Automated Vitest Test Results</h3>
+    <div class="code-block">$ npm run test:run
+
+ ✓ src/tests/food-ordering.test.js (9 tests)
+   ✓ should successfully add a new food order record
+   ✓ should display saved food records
+   ✓ should successfully edit a food record
+   ✓ should successfully delete a food record
+   ✓ should find a food record using the search text
+   ✓ should accept price 0 as a valid food price
+   ✓ CR-M9-01: should filter food records by specific status (Delivered)
+   ✓ CR-M9-01: should support combined search keyword and status filter
+   ✓ CR-M9-01: should safely normalize older/legacy localStorage records without status
+ ✓ src/filterRecords.test.js (2 tests)
+   ✓ returns matching records when keyword matches
+   ✓ ignores letter case and trims spaces
+
+ Test Files  2 passed (2)  |  Tests  11 passed (11)  |  Duration 1.29s
+
+$ npm run build
+> vite build  ✓ 16 modules transformed.  ✓ built in 329ms</div>
+
+  </div>
+</div>
+
+<!-- PAGE 5 -->
+<div class="page page-break">
+  <div class="school-header-wrapper">
+    <div class="school-header-inner">
+      <div class="school-logos">
+        <div class="logo-circle">CHCC<br>SEAL</div>
+        <div class="logo-circle">SCS<br>LOGO</div>
+      </div>
+      <div class="school-text-block">
+        <div class="school-name">CONCEPCION HOLY CROSS COLLEGE, INC.</div>
+        <div class="school-dept">SCHOOL OF COMPUTER STUDIES</div>
+        <div class="school-addr">Juan Luna St., Minane, Concepcion, Tarlac<br>Tel No. 045-923-0747 | E-Mail Address: concepcionholycrosscollege@yahoo.com</div>
+        <div class="school-motto">Competence | Holistic education | Compassion | Commitment</div>
+      </div>
+    </div>
+  </div>
+  <div class="student-activity-banner">STUDENT ACTIVITY</div>
+
+  <div class="p2-content">
+    <h3 class="table-heading">Release Evidence, Versioning &amp; GitHub Pull Request</h3>
+    <p class="p2-body">Under Semantic Versioning principles, introducing backward-compatible multi-status filtering, category dropdown filtering, and safe localStorage schema normalization warrants a <strong>MINOR</strong> version increment to <strong>v1.1.0</strong>. The evolution branch was merged into production via Pull Request #1 with verified commit provenance.</p>
+
+    <!-- GitHub Pull Request Merge Banner -->
+    <div style="background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px 16px; margin: 12px 0; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; color: #f0f6fc;">
+          <span>Merge pull request <a href="https://github.com/kdaledavid24-max/david-module7-system/pull/1" target="_blank" style="color: #58a6ff; text-decoration: none;">#1</a> from <span style="color: #f0f6fc;">kdaledavid24-max/module9/software-evolution</span></span>
+          <span style="background: #21262d; color: #8b949e; font-size: 10px; padding: 1px 5px; border-radius: 4px; border: 1px solid #30363d;">•••</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: #8b949e;">
+          <div style="width: 16px; height: 16px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #3b82f6); display: flex; align-items: center; justify-content: center; color: white; font-size: 8px; font-weight: bold;">
+            KD
+          </div>
+          <strong style="color: #c9d1d9;">kdaledavid24-max</strong>
+          <span>authored</span>
+          <span>·</span>
+          <span style="color: #3fb950; font-weight: 600;">✓ 2 / 2</span>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="display: inline-flex; align-items: center; border: 1px solid #238636; color: #3fb950; background: rgba(35,134,54,0.15); font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 12px;">
+          Verified
+        </span>
+        <div style="display: inline-flex; align-items: center; gap: 5px; background: #21262d; border: 1px solid #30363d; padding: 2px 7px; border-radius: 5px; font-family: monospace; font-size: 11px; color: #58a6ff;">
+          <span>709d118</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="table-heading" style="margin-top: 16px;">Live System Deployment &amp; Initial View Workflow</h3>
+    <p class="p2-body">The evolved prototype is continuously built and published via GitHub Pages. When stakeholders navigate to the live deployment, the system executes the following two-tier authentication and ordering workflow:</p>
+
+    <div style="border: 1px solid #cccccc; border-radius: 6px; padding: 12px 14px; background: #fafafa; margin-bottom: 12px;">
+      <p style="font-size: 10.5pt; margin-bottom: 6px;"><strong>🌐 Live System URL:</strong> <a href="https://kdaledavid24-max.github.io/david-module7-system/" target="_blank" style="color: #1a3a6b; font-weight: bold;">https://kdaledavid24-max.github.io/david-module7-system/</a></p>
+      
+      <p style="font-size: 10pt; margin-bottom: 4px;"><strong>1. Authentication Gateway (Initial View):</strong> Accessing the live link immediately presents the <em>LoginPage.vue</em> portal featuring an interactive animated food carousel on the left (Pizza, Burgers, Artisan Drinks, Fries) and the credentials input on the right with Light/Dark mode toggling.</p>
+      <p style="font-size: 10pt; margin-bottom: 0;"><strong>2. Evolved Management Dashboard:</strong> Upon successful sign-in or quick entry, the full FoodFlow Dashboard loads with the interactive 7-status filter pills (<em>All, Pending, Preparing, Ready, Delivered, Available, Cancelled</em>), category filter, CRUD modals, and localStorage persistence.</p>
+    </div>
+
+    <h3 class="table-heading">Traceability &amp; Verification Summary</h3>
+    <ul style="margin-left: 36px; font-size: 10.5pt;">
+      <li><strong>Repository:</strong> <a href="https://github.com/kdaledavid24-max/david-module7-system" target="_blank">https://github.com/kdaledavid24-max/david-module7-system</a></li>
+      <li><strong>Branch &amp; PR:</strong> <code>module9/software-evolution</code> &rarr; PR #1 into <code>main</code> (Commit <code>709d118</code>)</li>
+      <li><strong>Automated Testing:</strong> 11/11 automated Vitest unit &amp; regression tests passed</li>
+      <li><strong>Manual Testing:</strong> 14/14 test cases verified with zero regressions</li>
+      <li><strong>Build:</strong> Production bundle generated cleanly via Vite</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>
