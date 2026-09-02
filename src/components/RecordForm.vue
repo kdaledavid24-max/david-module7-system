@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch, nextTick } from 'vue'
+import { getAssetUrl } from '../utils/assetHelper.js'
 
 const props = defineProps({
   isOpen: {
@@ -9,6 +10,10 @@ const props = defineProps({
   editingRecord: {
     type: Object,
     default: null
+  },
+  isDarkMode: {
+    type: Boolean,
+    default: true
   }
 })
 
@@ -23,10 +28,10 @@ const form = ref({
 })
 
 const foodOptions = [
-  { name: 'Classic Burger', category: 'Main Course', price: 150.00, image: '/images/burger.jpg' },
-  { name: 'Pepperoni Pizza', category: 'Main Course', price: 250.00, image: '/images/pizza.jpg' },
-  { name: 'Crispy Fries', category: 'Sides', price: 80.00, image: '/images/fries.jpg' },
-  { name: 'Iced Matcha Latte', category: 'Drinks', price: 120.00, image: '/images/matcha.jpg' }
+  { name: 'Classic Burger', category: 'Main Course', price: 150.00, image: getAssetUrl('/images/burger.jpg') },
+  { name: 'Pepperoni Pizza', category: 'Main Course', price: 250.00, image: getAssetUrl('/images/pizza.jpg') },
+  { name: 'Crispy Fries', category: 'Sides', price: 80.00, image: getAssetUrl('/images/fries.jpg') },
+  { name: 'Iced Matcha Latte', category: 'Drinks', price: 120.00, image: getAssetUrl('/images/matcha.jpg') }
 ]
 
 const errors = ref({})
@@ -74,7 +79,6 @@ const validate = () => {
   if (!form.value.foodName) errors.value.foodName = 'Food selection is required'
   if (!form.value.category.trim()) errors.value.category = 'Category is required'
   
-  // Fixed validation: properly allows 0 as a valid price
   if (form.value.price === '' || form.value.price === null || form.value.price === undefined) {
     errors.value.price = 'Price is required'
   } else if (isNaN(form.value.price) || Number(form.value.price) < 0) {
@@ -112,35 +116,45 @@ const closeModal = () => {
     :class="isVisible ? 'bg-black/80 backdrop-blur-sm' : 'bg-transparent'"
     @click.self="closeModal"
   >
-    <div class="bg-[#111] border border-[#333] rounded-xl w-full max-w-md shadow-2xl p-6 relative transition-all duration-200 ease-out"
-      :class="isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'"
+    <div 
+      class="rounded-2xl w-full max-w-md shadow-2xl p-6 relative transition-all duration-200 ease-out border"
+      :class="[
+        isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4',
+        isDarkMode ? 'bg-[#111] border-[#333] text-white' : 'bg-white border-amber-200 text-gray-900 shadow-amber-900/20'
+      ]"
     >
       
       <!-- Close Button -->
-      <button @click="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-white transition">
+      <button @click="closeModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-white transition cursor-pointer">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
 
       <!-- Header -->
-      <div class="flex items-center space-x-3 mb-6 border-b border-[#222] pb-4">
-        <div class="bg-[#ffcc00] p-1.5 rounded-md">
+      <div 
+        class="flex items-center space-x-3 mb-6 border-b pb-4"
+        :class="isDarkMode ? 'border-[#222]' : 'border-amber-100'"
+      >
+        <div class="bg-[#ffcc00] p-1.5 rounded-xl shadow-md">
           <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
         </div>
         <div>
-          <h2 class="text-xl font-bold text-white">{{ editingRecord ? 'Edit Food Item' : 'Add Food Item' }}</h2>
-          <p class="text-xs text-gray-400">Enter the information for the menu item.</p>
+          <h2 class="text-xl font-bold">{{ editingRecord ? 'Edit Food Item' : 'Add Food Item' }}</h2>
+          <p class="text-xs text-gray-500">Enter the information for the menu item.</p>
         </div>
       </div>
       
       <form @submit.prevent="submitForm" class="space-y-4">
         <!-- Customer Name -->
         <div>
-          <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Customer Name</label>
+          <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" :class="isDarkMode ? 'text-gray-300' : 'text-gray-600'">Customer Name</label>
           <input 
             v-model="form.customerName" 
             type="text"
-            class="w-full px-4 py-3 bg-black border border-[#333] rounded-lg text-white focus:outline-none focus:border-[#ffcc00] transition"
-            :class="{'border-red-500': errors.customerName}"
+            class="w-full px-4 py-2.5 rounded-xl text-sm transition outline-none border"
+            :class="[
+              isDarkMode ? 'bg-black border-[#333] text-white focus:border-[#ffcc00]' : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-amber-500',
+              errors.customerName ? 'border-red-500' : ''
+            ]"
             placeholder="e.g. Juan Dela Cruz"
           />
           <p v-if="errors.customerName" class="text-red-500 text-xs mt-1">{{ errors.customerName }}</p>
@@ -148,12 +162,15 @@ const closeModal = () => {
 
         <!-- Food Name -->
         <div>
-          <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Food Name</label>
+          <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" :class="isDarkMode ? 'text-gray-300' : 'text-gray-600'">Food Name</label>
           <select 
             v-model="form.foodName"
             @change="handleFoodSelection"
-            class="w-full px-4 py-3 bg-black border border-[#333] rounded-lg text-white focus:outline-none focus:border-[#ffcc00] appearance-none transition"
-            :class="{'border-red-500': errors.foodName}"
+            class="w-full px-4 py-2.5 rounded-xl text-sm transition outline-none border cursor-pointer"
+            :class="[
+              isDarkMode ? 'bg-black border-[#333] text-white focus:border-[#ffcc00]' : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-amber-500',
+              errors.foodName ? 'border-red-500' : ''
+            ]"
           >
             <option value="" disabled>Select a food item</option>
             <option v-for="item in foodOptions" :key="item.name" :value="item.name">{{ item.name }}</option>
@@ -164,25 +181,31 @@ const closeModal = () => {
         <!-- Category & Price -->
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Category</label>
+            <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" :class="isDarkMode ? 'text-gray-300' : 'text-gray-600'">Category</label>
             <input 
               v-model="form.category" 
               type="text"
-              class="w-full px-4 py-3 bg-black border border-[#333] rounded-lg text-white focus:outline-none focus:border-[#ffcc00] transition"
-              :class="{'border-red-500': errors.category}"
+              class="w-full px-4 py-2.5 rounded-xl text-sm transition outline-none border"
+              :class="[
+                isDarkMode ? 'bg-black border-[#333] text-white focus:border-[#ffcc00]' : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-amber-500',
+                errors.category ? 'border-red-500' : ''
+              ]"
               placeholder="e.g. Main Course"
             />
             <p v-if="errors.category" class="text-red-500 text-xs mt-1">{{ errors.category }}</p>
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Price (₱)</label>
+            <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" :class="isDarkMode ? 'text-gray-300' : 'text-gray-600'">Price (₱)</label>
             <input 
               v-model="form.price" 
               type="number" 
               step="0.01"
-              class="w-full px-4 py-3 bg-black border border-[#333] rounded-lg text-white focus:outline-none focus:border-[#ffcc00] transition"
-              :class="{'border-red-500': errors.price}"
+              class="w-full px-4 py-2.5 rounded-xl text-sm transition outline-none border"
+              :class="[
+                isDarkMode ? 'bg-black border-[#333] text-white focus:border-[#ffcc00]' : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-amber-500',
+                errors.price ? 'border-red-500' : ''
+              ]"
               placeholder="e.g. 150"
             />
             <p v-if="errors.price" class="text-red-500 text-xs mt-1">{{ errors.price }}</p>
@@ -191,10 +214,11 @@ const closeModal = () => {
           
         <!-- Status -->
         <div>
-          <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Order Status</label>
+          <label class="block text-xs font-bold uppercase tracking-wider mb-1.5" :class="isDarkMode ? 'text-gray-300' : 'text-gray-600'">Order Status</label>
           <select 
             v-model="form.status"
-            class="w-full px-4 py-3 bg-black border border-[#333] rounded-lg text-white focus:outline-none focus:border-[#ffcc00] appearance-none transition"
+            class="w-full px-4 py-2.5 rounded-xl text-sm transition outline-none border cursor-pointer"
+            :class="isDarkMode ? 'bg-black border-[#333] text-white focus:border-[#ffcc00]' : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-amber-500'"
           >
             <option value="Pending">Pending</option>
             <option value="Preparing">Preparing</option>
@@ -206,10 +230,10 @@ const closeModal = () => {
           </select>
         </div>
         
-        <div class="pt-4 border-t border-[#222]">
+        <div class="pt-4 border-t" :class="isDarkMode ? 'border-[#222]' : 'border-gray-100'">
           <button 
             type="submit" 
-            class="w-full py-3 bg-[#ffcc00] text-black rounded-lg hover:bg-yellow-500 transition font-bold text-sm tracking-wider uppercase"
+            class="w-full py-3 bg-[#ffcc00] text-black rounded-xl hover:bg-yellow-500 transition font-bold text-sm tracking-wider uppercase cursor-pointer shadow-lg active:scale-98"
           >
             {{ editingRecord ? 'Save Changes' : 'Add Item' }}
           </button>
@@ -218,3 +242,4 @@ const closeModal = () => {
     </div>
   </div>
 </template>
+
