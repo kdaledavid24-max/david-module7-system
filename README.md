@@ -285,7 +285,33 @@ Added a Multi-Status and Category food record filter to improve order management
 
 Testing confirmed that the evolved system passed the existing regression suite and the new filter tests.
 
+- **Pull Request:** `Merge pull request #1 from kdaledavid24-max/module9/software-evolution` successfully merged into `main`
+
+### Updated Test Cases
+
+| Test Case ID | Test Case | Expected Result | Actual Result | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| TC01 | Add New Food Record | New food record is added successfully. | Food record was added successfully. | PASS |
+| TC02 | Add Inactive Food Record | Food record is saved with Inactive / Cancelled status. | Inactive food record was saved successfully. | PASS |
+| TC03 | Active Filter | Only Active / Available food records are displayed. | Active filter displayed only Active records. | PASS |
+| TC04 | Inactive Filter | Only Inactive / Cancelled food records are displayed. | Inactive filter displayed only Inactive records. | PASS |
+| TC05 | All Filter | All food records are displayed. | All food records were displayed. | PASS |
+| TC06 | Search with Active Filter | Matching Active food record is displayed. | Matching Active record was displayed. | PASS |
+| TC07 | Search with Inactive Filter | Matching Inactive food record is displayed. | Matching Inactive record was displayed. | PASS |
+| TC08 | Empty Inactive Results | No records and the empty-state message are displayed. | 0 records and the empty-state message were displayed. | PASS |
+| TC09 | Edit Food Record Status | Food record status changes successfully. | Food record status was changed successfully. | PASS |
+| TC10 | Delete Food Record | Delete confirmation appears and the food record is removed. | Delete confirmation and removal worked successfully. | PASS |
+| TC11 | Data Persistence | Food records remain after page refresh. | Food records remained after refresh. | PASS |
+| TC12 | Responsive Filter UI | Filter controls remain usable on desktop and mobile. | Responsive filter interface was maintained. | PASS |
+
+### Automated Test Evidence
+
+- **Vitest:** 11 tests passed, 0 failed
+- **Production Build:** Successful
+- **GitHub Actions:** Successful
+
 ### Author
 
 **Kristian Dale David**  
 BSCS 3A | Software Engineering 1
+
